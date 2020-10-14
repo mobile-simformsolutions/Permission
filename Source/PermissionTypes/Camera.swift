@@ -27,7 +27,7 @@ import AVFoundation
 
 internal extension Permission {
     var statusCamera: PermissionStatus {
-        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video)))
+        let status = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         
         switch status {
         case .authorized:          return .authorized
@@ -42,14 +42,9 @@ internal extension Permission {
             return
         }
         
-        AVCaptureDevice.requestAccess(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video))) { _ in
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { _ in
             callback(self.statusCamera)
         }
     }
 }
 #endif
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVMediaType(_ input: AVMediaType) -> String {
-	return input.rawValue
-}
